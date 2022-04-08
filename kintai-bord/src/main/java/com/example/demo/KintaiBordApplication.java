@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class KintaiApplication {
+public class KintaiBordApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(KintaiApplication.class, args);
+		SpringApplication.run(KintaiBordApplication.class, args);
 	}
 
 }
