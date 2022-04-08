@@ -10,6 +10,7 @@ public class DataBean {
 
 	String year;
 	String month;
+	String lastDay;
 	
 	 /** 月のMapオブジェクト */
     public Map<String,String> getMonthItems(){
