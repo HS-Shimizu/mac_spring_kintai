@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>勤怠表</title>
+<link rel="stylesheet" type="text/css" href="css/kintai_stylesheet.css">
+<script type="text/javascript" src="js/kintai_js.js"></script>
+</head>
+<body>
+
+	<h1>勤怠表</h1>
+	<form method="post" th:object="${user}">
+		<p>
+			<input type="text" th:value="*{year}" size="4" name="year"
+				maxlength="4" />年 
+				
+				<select th:field="*{month}" name="month">
+				<option value="*{month}"></option>
+				<option th:each="item : *{getMonthItems()}" th:value="${item.key}"
+					th:text="${item.value}" />
+			</select>月
+
+			<button id="search" name="search">検索</button>
+		</p>
+	</form>
+				<form>
+	<p>
+		<button id="register" name="button" value="2">登録</button>
+		<button id="delete" name="button" value="3">削除</button>
+	</p>
+
+	<table class="main_table">
+		<tr>
+			<th><input type="checkbox" name="all_check"
+				onclick="allChecked();">削除</th>
+			<th>日付</th>
+			<th>開始時刻</th>
+			<th>終了時刻</th>
+			<th>休憩時間</th>
+			<th>勤務時間</th>
+		</tr>
+
+		<tr th:each="item : ${dataList}">
+			<td><input type="checkbox" name="chk_delete"
+				th:value="${item.key}" onClick="isChecked();"></td>
+			<!-- 日付 -->
+			<td><input type="text" th:value="${item.value}" readonly /></td>
+			<td><input type="text" name="work_st" size="10" maxlength="4"></td>
+			<td><input type="text" name="work_ed" size="10" maxlength="4"></td>
+			<td><input type="text" name="work_rt" size="10" maxlength="3"></td>
+			<td><label for="work_t" id="work_t<%=i%>"></label></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>合計時間</td>
+			<td></td>
+		</tr>
+	</table>
+	<p>
+		<button id="register" name="button" value="2">登録</button>
+	</p>
+	</form>
+</body>
+</html>
