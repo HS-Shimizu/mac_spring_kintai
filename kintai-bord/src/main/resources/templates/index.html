@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>勤怠表</title>
+<link rel="stylesheet" type="text/css" href="css/kintai_stylesheet.css">
+<script type="text/javascript" src="js/kintai_js.js"></script>
+</head>
+<body>
+
+	<h1>勤怠表</h1>
+	<form th:action="@{/form}" th:object="${data}" method="post">
+		<p>
+			<input type="text" th:value="${year}" th:field="*{year}" size="4" name="year"
+				maxlength="4" />年 
+				
+			<select th:field="*{month}" name="month">
+				<option value="*{month}"></option>
+				<option th:each="item : *{getMonthItems()}" th:value="${item.key}"
+					th:text="${item.value}" />
+			</select>月
+
+			<button id="search" name="search">検索</button>
+		</p>
+		<p>
+			<button id="register" name="button" value="2">登録</button>
+			<button id="delete" name="button" value="3">削除</button>
+		</p>
+		<table>
+			<thead>
+				<tr>
+					<th>日付</th>
+					<th>開始時間</th>
+					<th>終了時間</th>
+					<th>休憩時間</th>
+				</tr>
+<!-- 
+				<tr th:each="KintaiBean : ${displayList}" th:object="${KintaiBean}">
+
+					ymd
+					<td class="center" th:text="*{displayYmd}"></td>
+
+					開始時間
+					<td><input type="text" name="work_st" size="10" maxlength="4"
+						th:value="*{displaySt}"></td>
+
+					終了時間
+					<td><input type="text" name="work_ed" size="10" maxlength="4"
+						th:value="*{displayEd}"></td>
+
+					休憩時間
+					<td><input type="text" name="work_rt" size="10" maxlength="4"
+						th:value="*{displayRt}"></td>
+				</tr>
+			</tbody>
+		</table> -->
+
+	</form>
+</body>
+</html>

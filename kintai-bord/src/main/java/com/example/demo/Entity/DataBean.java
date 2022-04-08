@@ -6,14 +6,10 @@ import java.util.Map;
 import lombok.Data;
 
 @Data
-public class User {
-	
-	private String year;
-	private String month;
-	private String lastDay;
-	private String ymd ;
-	
+public class DataBean {
 
+	String year;
+	String month;
 	
 	 /** 月のMapオブジェクト */
     public Map<String,String> getMonthItems(){
@@ -23,6 +19,4 @@ public class User {
         }
         return monthMap;
     }
-    
-   
 }
