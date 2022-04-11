@@ -4,11 +4,17 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import com.example.demo.Entity.DataBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.example.demo.Entity.DataBean;
+import com.example.demo.Entity.kintai;
+import com.example.demo.Repository.KintaiRepository;
+
+@Service
 public class KintaiService {
 
-	public static DataBean setData(DataBean data) {
+	public  DataBean setData(DataBean data) {
 
 		//現在の年取得
 		GregorianCalendar gcalendar = new GregorianCalendar();
@@ -29,7 +35,7 @@ public class KintaiService {
 		return data;
 	}
 
-	public static String setLastData(DataBean data, String sYear, String sMonth) {
+	public String setLastData(DataBean data, String sYear, String sMonth) {
 
 		int year = Integer.valueOf(sYear);
 		int month = Integer.valueOf(sMonth);
@@ -45,7 +51,7 @@ public class KintaiService {
 		return sResult;
 	}
 
-	public static List<DataBean> display(List<DataBean> dataList, DataBean data) {
+	public List<DataBean> display(List<DataBean> dataList, DataBean data) {
 
 		String sYear = data.getYear();
 		String sMonth = data.getMonth();
@@ -65,7 +71,12 @@ public class KintaiService {
 		}
 
 		return dataList;
-
 	}
 
+	 @Autowired
+	    KintaiRepository kintaiRepository;
+	    public List<kintai> searchAll() {
+	        // ユーザーTBLの内容を全検索
+	        return kintaiRepository.findAll();
+	    }
 }
