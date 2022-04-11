@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Entity.DataBean;
-import com.example.demo.Entity.kintai;
 import com.example.demo.Service.KintaiService;
 
 @Controller
@@ -26,10 +25,11 @@ public class KintaiControlle {
 		
 		DataBean data = new DataBean();
 		List<DataBean> dataList = new ArrayList<DataBean>();
+		
 
 		kintaiService.setData(data);
 		dataList = kintaiService.display(dataList, data);
-		List<kintai> kintailist = kintaiService.searchAll();
+		
 		
 		model.addAttribute("data", data);
 		model.addAttribute("dataList", dataList);

@@ -8,5 +8,6 @@ import com.example.demo.Entity.kintai;
 
 @Repository
 public interface KintaiRepository extends JpaRepository<kintai, String>,JpaSpecificationExecutor{
-
+	kintai findByYmd(String name);
 }
+
