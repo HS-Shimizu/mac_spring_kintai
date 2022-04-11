@@ -17,40 +17,46 @@ public class KintaiControlle {
 
 	@GetMapping("/form")
 	private String readForm(Model model) {
-			
+
 		DataBean data = new DataBean();
 		List<DataBean> dataList = new ArrayList<DataBean>();
-		
+
 		KintaiService.setData(data);
-		
+
 		dataList = KintaiService.display(dataList, data);
-		
-		
+
 		model.addAttribute("data", data);
 		model.addAttribute("dataList", dataList);
-		
+
 		return "index";
 	}
-	
-//	@GetMapping("/form")
-//	private String readForm(Model model) {
-//			
-//		DataBean data = new DataBean();
-//		KintaiService.setData(data);
-//		
-//		model.addAttribute("data", data);
-//		
-//		return "index";
-//	}
-	
+
+	//	@GetMapping("/form")
+	//	private String readForm(Model model) {
+	//			
+	//		DataBean data = new DataBean();
+	//		KintaiService.setData(data);
+	//		
+	//		model.addAttribute("data", data);
+	//		
+	//		return "index";
+	//	}
+
 	@PostMapping("/form")
-	private String Form(@RequestParam ("year") String year,@RequestParam ("month") String month , DataBean data ,Model model) {
-			
+	private String Form(@RequestParam("year") String year, @RequestParam("month") String month, DataBean data,
+			Model model) {
+
 		data.setYear(year);
 		data.setMonth(month);
-		
+		data.setLastDay(KintaiService.setLastData(data, year, month));
+
+		List<DataBean> dataList = new ArrayList<DataBean>();
+
+		dataList = KintaiService.display(dataList, data);
+
 		model.addAttribute("data", data);
-		
+		model.addAttribute("dataList", dataList);
+
 		return "index";
 	}
 }
