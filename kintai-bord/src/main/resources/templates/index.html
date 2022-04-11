@@ -34,26 +34,26 @@
 					<th>終了時間</th>
 					<th>休憩時間</th>
 				</tr>
-<!-- 
-				<tr th:each="KintaiBean : ${displayList}" th:object="${KintaiBean}">
 
-					ymd
-					<td class="center" th:text="*{displayYmd}"></td>
+				<tr th:each=" list : ${dataList}" th:object="${DataBean}">
 
-					開始時間
+					<!-- ymd -->
+					<td class="center" th:text="${list.ymd}"></td>
+
+					<!-- 開始時間 -->
 					<td><input type="text" name="work_st" size="10" maxlength="4"
-						th:value="*{displaySt}"></td>
+						th:text="${list.workst}"></td>
 
-					終了時間
+					<!-- 終了時間 -->
 					<td><input type="text" name="work_ed" size="10" maxlength="4"
-						th:value="*{displayEd}"></td>
+						th:text="${list.worked}"></td>
 
-					休憩時間
+					<!-- 休憩時間 -->
 					<td><input type="text" name="work_rt" size="10" maxlength="4"
-						th:value="*{displayRt}"></td>
+						th:text="${list.workrt}"></td>
 				</tr>
 			</tbody>
-		</table> -->
+		</table> 
 
 	</form>
 </body>

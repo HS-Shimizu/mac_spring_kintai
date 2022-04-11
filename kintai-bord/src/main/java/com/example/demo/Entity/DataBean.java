@@ -10,6 +10,10 @@ public class DataBean {
 
 	String year;
 	String month;
+	String ymd;
+	String workst;
+	String worked;
+	String workrt;
 	String lastDay;
 	
 	 /** 月のMapオブジェクト */
