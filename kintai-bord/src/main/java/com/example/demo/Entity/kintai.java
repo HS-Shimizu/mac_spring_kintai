@@ -23,18 +23,18 @@ import lombok.Data;
 		 * 開始時間
 		 */
 		@Column(name = "work_st")
-		private String work_st;
+		private String workSt;
 
 		/**
 		 * 終了時間
 		 */
 		@Column(name = "work_ed")
-		private String work_ed;
+		private String workEd;
 
 		/**
 		 * 休憩時間
 		 */
 		@Column(name = "work_rt")
-		private String work_rt;
+		private String workRt;
 	}
 

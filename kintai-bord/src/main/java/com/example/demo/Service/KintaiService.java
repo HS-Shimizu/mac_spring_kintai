@@ -55,6 +55,7 @@ public class KintaiService {
 
 		return data;
 	}
+
 	/**
 	 * 年　月　最終日をセット (2回目用）
 	 * 
@@ -70,7 +71,6 @@ public class KintaiService {
 
 		return data;
 	}
-	
 
 	/**
 	 * 最終日の取得
@@ -123,9 +123,9 @@ public class KintaiService {
 			if (kintailist == null) {
 
 			} else {
-				data.setWorkst(kintailist.getWork_st());
-				data.setWorked(kintailist.getWork_ed());
-				data.setWorkrt(kintailist.getWork_rt());
+				data.setWorkst(kintailist.getWorkSt());
+				data.setWorked(kintailist.getWorkEd());
+				data.setWorkrt(kintailist.getWorkRt());
 			}
 
 			dataList.add(data);
@@ -134,10 +134,63 @@ public class KintaiService {
 		return dataList;
 	}
 
-	public List<kintai> regist() {
+	public void delete() {
 
-		// 入力された値を探す
-		//入力された値を登録
-		return kintaiRepository.save(null);
+		//		 kintai kintailist = kintaiRepository.findByYmd("20220411");
+		kintaiRepository.deleteById("20220411");
+
 	}
+
+	/**
+	 * データベースに登録
+	 * 
+	 * @param data
+	 * @param workSt
+	 * @param workEd
+	 * @param workRt
+	 */
+	public void regist(DataBean data, String workSt, String workEd, String workRt) {
+
+		String year = data.getYear();
+		String month = data.getMonth();
+
+		String[] workStList = cut(workSt);
+		String[] workEdList = cut(workEd);
+		String[] workRtList = cut(workRt);
+
+		for (int i = 1; i <= Integer.valueOf(data.getLastDay()); i++) {
+			kintai kintaiData = new kintai();
+
+			month = padding(month);
+			String day = padding(String.valueOf(i));
+
+			kintaiData.setYmd(year + month + day);
+			kintaiData.setWorkSt(workStList[i - 1]);
+			kintaiData.setWorkEd(workEdList[i - 1]);
+			kintaiData.setWorkRt(workRtList[i - 1]);
+
+			kintaiRepository.save(kintaiData);
+		}
+	}
+
+	/**
+	 * 月と日付を０パディング
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public String padding(String str) {
+		str = String.format("%2s", str).replace(" ", "0");
+
+		return str;
+	}
+	
+	public String[] cut(String str) {
+		
+		String workTime[] = str.split(",", -1);
+		
+		return workTime;
+		
+	}
+
 }
