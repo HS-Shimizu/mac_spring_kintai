@@ -3,9 +3,13 @@ package com.example.demo.controlle;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,7 +35,7 @@ public class KintaiControlle {
 
 		DataBean data = new DataBean();
 
-		kintaiService.setData(data);
+		kintaiService.setData(data,true);
 		dataList = kintaiService.display(dataList, data);
 
 		model.addAttribute("data", data);
@@ -45,30 +49,37 @@ public class KintaiControlle {
 	 * 
 	 */
 	@PostMapping("/form")
-	private String Form(@RequestParam("button") String button, @RequestParam("year") String year,
-			@RequestParam("month") String month, DataBean data,
+	private String Form(@RequestParam("button") String button, @Valid DataBean data,
 			@RequestParam("work_st") String workst, @RequestParam("work_ed") String worked,
-			@RequestParam("work_rt") String workrt, Model model) {
+			@RequestParam("work_rt") String workrt, Model model, BindingResult bindingResult) {
 
 		dataList = new ArrayList<DataBean>();
-		
-		data = kintaiService.setData(data, year, month);
-		
+
+		if (bindingResult.hasErrors()) {
+			List<String> errorList = new ArrayList<String>();
+			for (ObjectError error : bindingResult.getAllErrors()) {
+				errorList.add(error.getDefaultMessage());
+			}
+			model.addAttribute("validationError", errorList);
+			return "index";
+		}
+
+		data = kintaiService.setData(data, false);
 
 		if (button.equals("2")) {
-			
+			// 登録ボタン押下時
 			kintaiService.regist(data, workst, worked, workrt);
-			
+
 		} else if (button.equals("3")) {
-			
-			kintaiService.delete();
-			 
+			//削除ボタン押下時
+			kintaiService.delete(data);
+
 		} else {
 
 		}
-		kintaiService.setData(data);
+		//		kintaiService.setData(data);
 		dataList = kintaiService.display(dataList, data);
-		
+
 		model.addAttribute("data", data);
 		model.addAttribute("dataList", dataList);
 

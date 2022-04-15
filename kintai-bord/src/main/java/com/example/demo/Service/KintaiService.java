@@ -44,30 +44,17 @@ public class KintaiService {
 	 * 年　月　最終日をセット
 	 * 
 	 */
-	public DataBean setData(DataBean data) {
+	public DataBean setData(DataBean data, boolean flag) {
 
-		//現在の年取得
-		getYear(data);
-		//現在の月取得
-		getMonth(data);
+		if(flag) {
+			//現在の年取得
+			getYear(data);
+			//現在の月取得
+			getMonth(data);
+		}
+		
 		//最終日の取得
 		setLastData(data, data.getYear(), data.getMonth());
-
-		return data;
-	}
-
-	/**
-	 * 年　月　最終日をセット (2回目用）
-	 * 
-	 */
-	public DataBean setData(DataBean data, String year, String month) {
-
-		//現在の年取得
-		data.setYear(year);
-		//現在の月取得
-		data.setMonth(month);
-		//最終日の取得
-		setLastData(data, year, month);
 
 		return data;
 	}
@@ -98,7 +85,6 @@ public class KintaiService {
 	 */
 	public List<DataBean> display(List<DataBean> dataList, DataBean data) {
 
-		String sYear = data.getYear();
 		String sMonth = data.getMonth();
 		String lastDay = data.getLastDay();
 
@@ -106,18 +92,16 @@ public class KintaiService {
 
 			String year = data.getYear();
 			String month = data.getMonth();
-			String day = String.valueOf(i);
 
-			year = String.format("%4s", year).replace(" ", "0");
-			month = String.format("%2s", month).replace(" ", "0");
-			day = String.format("%2s", day).replace(" ", "0");
+			month = padding(month);
+			String day = padding(String.valueOf(i));
 
 			String ymd = year + "/" + month + "/" + day;
 			kintai kintailist = kintaiRepository.findByYmd(year + month + day);
 
 			data = new DataBean();
 
-			data.setYear(sYear);
+			data.setYear(year);
 			data.setMonth(sMonth);
 			data.setYmd(ymd);
 			if (kintailist == null) {
@@ -134,10 +118,24 @@ public class KintaiService {
 		return dataList;
 	}
 
-	public void delete() {
+	/**
+	 * データ削除
+	 * 
+	 */
+	public void delete(DataBean data) {
 
-		//		 kintai kintailist = kintaiRepository.findByYmd("20220411");
-		kintaiRepository.deleteById("20220411");
+		String year = data.getYear();
+		String month = data.getMonth();
+		month = padding(month);
+
+		for (int i = 1; i <= Integer.valueOf(data.getLastDay()); i++) {
+
+			
+			String day = padding(String.valueOf(i));
+
+			kintaiRepository.deleteById(year + month + day);
+			
+		}
 
 	}
 
@@ -153,6 +151,7 @@ public class KintaiService {
 
 		String year = data.getYear();
 		String month = data.getMonth();
+		month = padding(month);
 
 		String[] workStList = cut(workSt);
 		String[] workEdList = cut(workEd);
@@ -160,8 +159,7 @@ public class KintaiService {
 
 		for (int i = 1; i <= Integer.valueOf(data.getLastDay()); i++) {
 			kintai kintaiData = new kintai();
-
-			month = padding(month);
+			
 			String day = padding(String.valueOf(i));
 
 			kintaiData.setYmd(year + month + day);

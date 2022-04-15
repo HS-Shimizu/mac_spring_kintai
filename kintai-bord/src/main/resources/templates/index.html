@@ -7,14 +7,18 @@
 <script type="text/javascript" src="js/kintai_js.js"></script>
 </head>
 <body>
-
+	<table>
+		<tr th:if="${validationError}" th:each="error : ${validationError}">
+			<td th:text="${error}"></td>
+		</tr>
+	</table>
 	<h1>勤怠表</h1>
 	<form th:action="@{/form}" th:object="${data}" method="post">
 		<p>
-			<input type="text" th:value="${year}" th:field="*{year}" size="4" name="year"
-				maxlength="4" />年 
-				
-			<select th:field="*{month}" name="month">
+			<input type="text" th:value="${year}" th:field="*{year}" size="4"
+				name="year" maxlength="4" />年
+			<td th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Name
+				Error</td> <select th:field="*{month}" name="month">
 				<option value="*{month}"></option>
 				<option th:each="item : *{getMonthItems()}" th:value="${item.key}"
 					th:text="${item.value}" />
@@ -46,14 +50,15 @@
 
 					<!-- 終了時間 -->
 					<td><input type="text" name="work_ed" size="10" maxlength="4"
-						th:value="${list.worked}"></td>
+						th:value="${list.worked}" ></td>
 
 					<!-- 休憩時間 -->
 					<td><input type="text" name="work_rt" size="10" maxlength="4"
-						th:value="${list.workrt}"></td>
+						th:value="${list.workrt}" ></td>
 				</tr>
 			</tbody>
-		</table> 
+		</table>
+
 
 	</form>
 </body>
